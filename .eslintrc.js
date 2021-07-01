@@ -5,4 +5,12 @@ module.exports = {
   rules: {
     // semi: ['error', 'never'],
   },
+  settings: {
+    "import/resolver": {
+      "babel-plugin-root-import": {
+        "rootPathPrefix": "~",
+        "rootPathSuffix": "src"
+      }
+    }
+  }
 }

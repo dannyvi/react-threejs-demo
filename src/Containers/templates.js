@@ -1,4 +1,5 @@
 import React  from 'react'
+import GLView from 'Containers/GLView'
 import * as THREE from 'three'
 
 export default function Geometry3() {

@@ -6,8 +6,9 @@ import Geometry2 from './Containers/Geometries/Geometry2'
 import Geometry3 from './Containers/Geometries/Geometry3'
 import Sun from './Containers/Scenes/Sun'
 import SunGui from './Containers/Scenes/SunGui'
+import Tank from './Containers/Scenes/Tank'
 
-const glContainers = [GreenGeometry, Geometry2, Geometry3, Sun, SunGui]
+const glContainers = [GreenGeometry, Geometry2, Geometry3, Sun, SunGui, Tank]
 
 function containerToRoute(container) {
   const name = container.name
