@@ -33,7 +33,6 @@ const ROUTES = [
   {
     path: '/app',
     key: 'app',
-    // component: () => <h1>App</h1>,
     component: RenderRoutes,
     routes: [
       {
@@ -80,7 +79,6 @@ export function displayRouteMenu(routes) {
       <li key={route.key}>
         <Link to={route.path}>
           {route.key}
-          {/*({route.path})*/}
         </Link>
       </li>
     )
