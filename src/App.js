@@ -8,7 +8,7 @@ export default function App() {
       <div style={{ flex: 1, backgroundColor: '#f2f2f2' }}>
         {displayRouteMenu(ROUTES)}
       </div>
-      <div style={{ flex: 5, backgroundColor: '#ffff00' }}>
+      <div style={{ flex: 4, backgroundColor: '#ffff00' }}>
         <RenderRoutes routes={ROUTES}/>
       </div>
     </div>

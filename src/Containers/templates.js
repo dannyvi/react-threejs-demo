@@ -1,4 +1,4 @@
-import React  from 'react'
+import React from 'react'
 import GLView from 'Containers/GLView'
 import * as THREE from 'three'
 
@@ -6,22 +6,18 @@ export default function Geometry3() {
   const onContextCreate = canvas => {
     const renderer = new THREE.WebGLRenderer({ canvas })
 
-    const fov = 75
-    const aspect = 2  // the canvas default
-    const near = 0.1
-    const far = 5
+    const scene = new THREE.Scene()
+
+    const [ fov, aspect, near, far ] = [ 75, 2, 0.1, 5 ]
     const camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
     camera.position.z = 2
 
-    const scene = new THREE.Scene()
 
-    {
-      const color = 0xFFFFFF
-      const intensity = 1
-      const light = new THREE.DirectionalLight(color, intensity)
-      light.position.set(-1, 2, 4)
-      scene.add(light)
-    }
+    const color = 0xFFFFFF
+    const intensity = 1
+    const light = new THREE.DirectionalLight(color, intensity)
+    light.position.set(-1, 2, 4)
+    scene.add(light)
 
     const boxWidth = 1
     const boxHeight = 1
@@ -45,18 +41,6 @@ export default function Geometry3() {
       makeInstance(geometry, 0xaa8844, 2),
     ]
 
-    function resizeRendererToDisplaySize(renderer) {
-      // 调整渲染精度
-      const canvas = renderer.domElement
-      const width = canvas.clientWidth
-      const height = canvas.clientHeight
-      const needResize = canvas.width !== width || canvas.height !== height
-      if (needResize) {
-        renderer.setSize(width, height, false)
-      }
-      return needResize
-    }
-
     function resizeRendererToDisplaySizeHdi(renderer) {
       const canvas = renderer.domElement
       const pixelRatio = window.devicePixelRatio
@@ -69,7 +53,6 @@ export default function Geometry3() {
       return needResize
     }
 
-
     function render(time) {
       time *= 0.001  // convert time to seconds
 
@@ -80,7 +63,7 @@ export default function Geometry3() {
         cube.rotation.y = rot
       })
 
-      const resize = hdi ? resizeRendererToDisplaySize : resizeRendererToDisplaySizeHdi
+      const resize = resizeRendererToDisplaySizeHdi
 
       if (resize(renderer)) {
         const canvas = renderer.domElement

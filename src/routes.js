@@ -7,8 +7,16 @@ import Geometry3 from './Containers/Geometries/Geometry3'
 import Sun from './Containers/Scenes/Sun'
 import SunGui from './Containers/Scenes/SunGui'
 import Tank from './Containers/Scenes/Tank'
+import Texture1 from './Containers/Textures/Texture1'
+import TextureFlowers from 'Containers/Textures/TextureFlowers'
+import AmbientLight from './Containers/Light/AmbientLight'
+import PerspectiveCamera from './Containers/Cameras/PerspectiveCamera'
+import TwoCamera from './Containers/Cameras/TwoCamera'
 
-const glContainers = [GreenGeometry, Geometry2, Geometry3, Sun, SunGui, Tank]
+const glContainers = [
+  GreenGeometry, Geometry2, Geometry3, Sun, SunGui, Tank, Texture1, TextureFlowers, AmbientLight, PerspectiveCamera,
+  TwoCamera
+]
 
 function containerToRoute(container) {
   const name = container.name
@@ -44,9 +52,9 @@ export default ROUTES
 function RouteWithSubRoutes(route) {
   return (
     <Route
-      path={ route.path }
-      exact={ route.exact }
-      render={ props => <route.component { ...props } routes={ route.routes }/> }
+      path={route.path}
+      exact={route.exact}
+      render={props => <route.component {...props} routes={route.routes}/>}
     />
   )
 }
@@ -54,10 +62,10 @@ function RouteWithSubRoutes(route) {
 export function RenderRoutes({ routes }) {
   return (
     <Switch>
-      { routes.map((route) => {
-        return <RouteWithSubRoutes key={ route.key } { ...route } />
-      }) }
-      <Route component={ () => <h1>Not Found!</h1> }/>
+      {routes.map((route) => {
+        return <RouteWithSubRoutes key={route.key} {...route} />
+      })}
+      <Route component={() => <h1>Not Found!</h1>}/>
     </Switch>
   )
 }
