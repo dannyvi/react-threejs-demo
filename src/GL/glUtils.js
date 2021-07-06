@@ -60,3 +60,20 @@ export function degree45Project(gl) {
     zFar)
   return projectionMatrix
 }
+
+export function glattr(program, name, gl) {
+  // name = Object.keys({obj})[0]
+  const glPointer = gl.getAttribLocation(program, name)
+  return glPointer
+}
+
+export function list(obj) {
+  return Object.entries(obj)
+}
+
+
+export class VertexAttr {
+  constructor (name, array, unit, dataType, arrayType, drawType){
+
+  }
+}

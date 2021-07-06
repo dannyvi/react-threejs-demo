@@ -1,14 +1,16 @@
 import {
+  beginRender,
   createBuffer,
   degree45Project,
   getContext,
   initAttrib,
+  glattr, list
 } from '../../GL/glUtils'
 import { mat4 } from 'gl-matrix'
 
 const vsSource = `
-    attribute vec4 vertexPosition;
-    attribute vec4 vertexColor;
+    attribute vec4 position;
+    attribute vec4 color;
     
     uniform mat4 modelViewMatrix;
     uniform mat4 projectionMatrix;
@@ -16,8 +18,8 @@ const vsSource = `
     varying lowp vec4 vColor;
     
     void main() {
-      gl_Position = projectionMatrix * modelViewMatrix * vertexPosition;
-      vColor = vertexColor;
+      gl_Position = projectionMatrix * modelViewMatrix * position;
+      vColor = color;
     }
   `
 
@@ -32,55 +34,60 @@ export default function (canvas) {
 
   const gl = getContext(canvas)
 
-  const position = [
-    1.0, 1.0,
-    -1.0, 1.0,
-    1.0, -1.0,
-    -1.0, -1.0,
-  ]
-  const color = [
-    1.0, 1.0, 1.0, 1.0,    // white
-    1.0, 0.0, 0.0, 1.0,    // red
-    0.0, 1.0, 0.0, 1.0,    // green
-    0.0, 0.0, 1.0, 1.0,    // blue
-  ]
+  const vertexes = {
+    position: [
+      1.0, 1.0,
+      -1.0, 1.0,
+      1.0, -1.0,
+      -1.0, -1.0,
+    ],
+    color: [
+      1.0, 1.0, 1.0, 1.0,    // white
+      1.0, 0.0, 0.0, 1.0,    // red
+      0.0, 1.0, 0.0, 1.0,    // green
+      0.0, 0.0, 1.0, 1.0,    // blue
+    ]
+  }
+  const vertList = Object.entries(vertexes)
+
   const shaderProgram = initShaderProgram(gl, vsSource, fsSource)
   gl.useProgram(shaderProgram)
 
   const attrRestArgs = [ gl.FLOAT, false, 0, 0 ]
   const args = [ gl.ARRAY_BUFFER, Float32Array, gl.STATIC_DRAW ]
-  const buffers = [position, color].map(obj => createBuffer(gl, obj, ...args))
-  const attrNames = ['vertexPosition', 'vertexColor']
-  const attrs = attrNames.map(name => gl.getAttribLocation(shaderProgram, name))
-  const numbers = [2, 4]
+  const buffers = vertList.map(([_, value]) => createBuffer(gl, value, ...args))
+  const attrs = vertList.map(([name, _]) => glattr(shaderProgram, name, gl))
+  const numbers = [ 2, 4 ]
   buffers.map((buffer, index) => initAttrib(gl, buffer, gl.ARRAY_BUFFER, attrs[index], numbers[index], ...attrRestArgs))
 
 
-  const matrixNames = ['projectionMatrix', 'modelViewMatrix']
+  const matrixNames = [ 'projectionMatrix', 'modelViewMatrix' ]
   const mats = matrixNames.map(name => gl.getUniformLocation(shaderProgram, name))
   const projectionMat = degree45Project(gl)
   const modelViewMat = mat4.create()
-  mat4.translate(modelViewMat, modelViewMat, [-0.0, 0.0, -6.0])
-  var squareRotation = 0.0;
-  mat4.rotate(modelViewMat, modelViewMat, squareRotation, [0, 0, 1]);
-  mats.map((mat, index) => gl.uniformMatrix4fv(mat, false, [projectionMat, modelViewMat][index]))
+  mat4.translate(modelViewMat, modelViewMat, [ -0.0, 0.0, -6.0 ])
+  var squareRotation = 0.0
+  mat4.rotate(modelViewMat, modelViewMat, squareRotation, [ 0, 0, 1 ])
+  mats.map((mat, index) => gl.uniformMatrix4fv(mat, false, [ projectionMat, modelViewMat ][index]))
 
-  var then = 0;
+  var then = 0
 
   // Draw the scene repeatedly
   function render(now) {
-    now *= 0.001;  // convert to seconds
-    const deltaTime = now - then;
-    then = now;
+    now *= 0.001  // convert to seconds
+    const deltaTime = now - then
+    then = now
 
-    drawScene(deltaTime);
+    drawScene(deltaTime)
 
-    requestAnimationFrame(render);
+    requestAnimationFrame(render)
   }
-  requestAnimationFrame(render);
+
+  requestAnimationFrame(render)
+
   function drawScene(deltaTime) {
     // squareRotation += deltaTime;
-    mat4.rotate(modelViewMat, modelViewMat, deltaTime, [0, 0, 1]);
+    mat4.rotate(modelViewMat, modelViewMat, deltaTime, [ 0, 0, 1 ])
     gl.uniformMatrix4fv(mats[1], false, modelViewMat)
     gl.clearColor(0.0, 0.0, 0.0, 1.0)  // Clear to black, fully opaque
     gl.clearDepth(1.0)                 // Clear everything
