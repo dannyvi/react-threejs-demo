@@ -1,5 +1,5 @@
 import React from 'react'
-import GLView from 'Containers/GLView'
+import GLView from 'GL/View'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GUI } from 'dat.gui'

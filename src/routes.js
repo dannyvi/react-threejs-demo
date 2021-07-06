@@ -12,10 +12,13 @@ import TextureFlowers from 'Containers/Textures/TextureFlowers'
 import AmbientLight from './Containers/Light/AmbientLight'
 import PerspectiveCamera from './Containers/Cameras/PerspectiveCamera'
 import TwoCamera from './Containers/Cameras/TwoCamera'
+import JumpBalls from './Containers/Shadows/JumpBalls'
+import Fog1 from './Containers/Fogs/Fog'
+import BasicShader from './Containers/Shaders/Basic'
 
 const glContainers = [
   GreenGeometry, Geometry2, Geometry3, Sun, SunGui, Tank, Texture1, TextureFlowers, AmbientLight, PerspectiveCamera,
-  TwoCamera
+  TwoCamera, JumpBalls, Fog1, BasicShader
 ]
 
 function containerToRoute(container) {

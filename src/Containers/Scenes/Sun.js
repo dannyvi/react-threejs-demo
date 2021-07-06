@@ -1,5 +1,5 @@
 import React from 'react'
-import GLView from '../GLView'
+import GLView from '../../GL/View'
 import * as THREE from 'three'
 // import Dat from 'dat.gui'
 // import init from 'three-dat.gui'

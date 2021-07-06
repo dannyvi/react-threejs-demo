@@ -11,7 +11,7 @@ function GLView({ onContextCreate }) {
   }
   useEffect(_onContextCreate, [])
   return <div style={{ width: '100%', height: '100%', position: 'relative'}}>
-    <canvas id='glscene'  style={{zIndex:1, width: '100%', height: '100%', display: 'block' }}/>
+    <canvas id='glscene'  style={{width: '100%', height: '100%', display: 'block' }}/>
 
     <div className='split'>
       <div id='view1' tabIndex='1'><span>Hello</span></div>

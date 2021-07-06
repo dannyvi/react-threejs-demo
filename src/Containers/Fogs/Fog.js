@@ -3,34 +3,30 @@ import GLView from 'GL/View'
 import * as THREE from 'three'
 import { setupEnv } from 'GL/threeActions'
 
-export default function Geometry3() {
+export default function Fog1() {
   const onContextCreate = canvas => {
     const [renderer, scene, camera, light] = setupEnv(canvas)
 
-    const boxWidth = 1
-    const boxHeight = 1
-    const boxDepth = 1
-    const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth)
+    scene.background = new THREE.Color('white');
+    scene.fog = new THREE.FogExp2(0xFFFFFF, 0.3);
+    camera.position.z = 4
+
+    const geometry = new THREE.BoxGeometry(1, 1, 2)
 
     function makeInstance(geometry, color, x) {
       const material = new THREE.MeshPhongMaterial({ color })
-
       const cube = new THREE.Mesh(geometry, material)
       scene.add(cube)
-
       cube.position.x = x
-
       return cube
     }
 
     const cubes = [
-      makeInstance(geometry, 0x44aa88, 0),
-      makeInstance(geometry, 0x8844aa, -2),
-      makeInstance(geometry, 0xaa8844, 2),
+      makeInstance(geometry, 0x00ffaa, -2),
+      makeInstance(geometry, 0x00ff44, 2),
     ]
 
     function resizeRendererToDisplaySizeHdi(renderer) {
-      const canvas = renderer.domElement
       const pixelRatio = window.devicePixelRatio
       const width = canvas.clientWidth * pixelRatio | 0
       const height = canvas.clientHeight * pixelRatio | 0
@@ -59,9 +55,7 @@ export default function Geometry3() {
         camera.aspect = canvas.clientWidth / canvas.clientHeight
         camera.updateProjectionMatrix()
       }
-
       renderer.render(scene, camera)
-
       requestAnimationFrame(render)
     }
 

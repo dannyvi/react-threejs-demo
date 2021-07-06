@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import GLView from '../GLView'
+import GLView from '../../GL/View'
 import * as THREE from 'three'
 
 export default function Geometry3() {
