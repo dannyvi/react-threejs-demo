@@ -3,7 +3,7 @@ import React from 'react'
 import { Link, Route, Switch } from 'react-router-dom' // <-- New code
 import GreenGeometry from './Containers/Geometries/Geometry'
 import Geometry2 from './Containers/Geometries/Geometry2'
-import Geometry3 from './Containers/Geometries/Geometry3'
+import Geometry3 from './Containers/templates'
 import Sun from './Containers/Scenes/Sun'
 import SunGui from './Containers/Scenes/SunGui'
 import Tank from './Containers/Scenes/Tank'
@@ -22,7 +22,7 @@ const glContainers = [
 ]
 
 function containerToRoute(container) {
-  const name = container.name
+  const name: string = container.name
   return {
     path: `/app/${name}`,
     key: name,
